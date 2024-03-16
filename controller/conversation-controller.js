@@ -23,3 +23,15 @@ export const newConversation = async (req,res) => {
         res.status(500).json(error.message);
     }
 }
+
+export const getConversation = async (req,res) => {
+    try{
+        const senderId = req.body.senderId;
+        const recieverId = req.body.recieverId;
+        const curr_conversation = await conversation.findOne({ members : { $all : [senderId,recieverId] }});
+        res.status(200).json(curr_conversation);
+    }
+    catch(error){
+        res.status(500).json(error.message);
+    }
+}
